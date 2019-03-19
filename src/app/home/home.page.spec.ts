@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomePage } from './home.page';
+import { environment } from '../../environments/environment';
 
 describe('HomePage', () => {
   let component: HomePage;
@@ -23,5 +24,10 @@ describe('HomePage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set the appName to the enviornment appName', () => {
+    const app = fixture.debugElement.componentInstance;
+    expect(app.appName).toEqual(environment.appName);
   });
 });
