@@ -62,4 +62,20 @@ describe('AppComponent', () => {
     expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/home');
   });
 
+  it('should have one router outlet', async () => {
+    const fixture = await TestBed.createComponent(AppComponent);
+    await fixture.detectChanges();
+    const app = fixture.nativeElement;
+    const routerOutlet = app.querySelectorAll('ion-router-outlet');
+    expect(routerOutlet.length).toEqual(1);
+  });
+
+  it('should have one menubar', async () => {
+    const fixture = await TestBed.createComponent(AppComponent);
+    await fixture.detectChanges();
+    const app = fixture.nativeElement;
+    const menubar = app.querySelectorAll('app-menubar');
+    expect(menubar.length).toEqual(1);
+  });
+
 });

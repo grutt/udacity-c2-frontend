@@ -26,8 +26,4 @@ describe('HomePage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set the appName to the enviornment appName', () => {
-    const app = fixture.debugElement.componentInstance;
-    expect(app.appName).toEqual(environment.appName);
-  });
 });

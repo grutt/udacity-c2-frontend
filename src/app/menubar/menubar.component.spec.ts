@@ -30,6 +30,6 @@ describe('MenubarPage', () => {
     const app = fixture.nativeElement;
     const title = app.querySelectorAll('ion-title');
     expect(title.length).toEqual(1);
-    expect(title[0]).toEqual(environment.appName);
+    expect(title[0].innerText).toEqual(environment.appName);
   });
 });
