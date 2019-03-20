@@ -10,7 +10,8 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: './home/home.module#HomePageModule'
-  }
+  },
+  { path: 'post-form', loadChildren: './post/post-form/post-form.module#PostFormPageModule' }
 ];
 
 @NgModule({
