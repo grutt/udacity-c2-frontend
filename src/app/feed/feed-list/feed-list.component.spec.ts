@@ -34,7 +34,7 @@ describe('FeedListComponent', () => {
   });
 
   it('should fetch on load', () => {
-    expect(feedProvider.fetch).toHaveBeenCalled();
+    expect(feedProvider.getFeed).toHaveBeenCalled();
   });
 
   it('should display all of the fetched items', () => {
