@@ -20,11 +20,14 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
 
+  handleError(error: Error) {
+    alert(error.message);
+  }
+
   setAuthToken(token) {
     this.httpOptions.headers = this.httpOptions.headers.append('Authorization', `jwt ${token}`);
     this.token = token;
   }
-
 
   get(endpoint): Promise<any> {
     const url = `${API_HOST}${endpoint}`;
@@ -32,14 +35,20 @@ export class ApiService {
 
     return req
             .toPromise()
-            .catch((e) => { throw e; });
+            .catch((e) => {
+              this.handleError(e);
+              throw e;
+            });
   }
 
   post(endpoint, data): Promise<any> {
     const url = `${API_HOST}${endpoint}`;
     return this.http.post<HttpEvent<any>>(url, data, this.httpOptions)
             .toPromise()
-            .catch((e) => { throw e; });
+            .catch((e) => {
+              this.handleError(e);
+              throw e;
+            });
   }
 
   async upload(endpoint: string, file: File, payload: any): Promise<any> {
