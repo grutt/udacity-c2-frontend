@@ -14,7 +14,12 @@
 </ion-item-group>
 
 <!-- display the avatar if user is logged in -->
-<ion-avatar
+<ion-item-group
+  (click)="logout()"
   *ngIf=" ( auth.currentUser$ | async ) ">
-  <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-</ion-avatar>
+  {{( auth.currentUser$ | async ).email }}
+  <ion-button 
+  color="primary">
+   Log Out
+  </ion-button>
+</ion-item-group>

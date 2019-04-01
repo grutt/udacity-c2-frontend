@@ -23,7 +23,7 @@ describe('FeedListComponent', () => {
 
     // SET UP SPIES AND MOCKS
     feedProvider = fixture.debugElement.injector.get(FeedProviderService);
-    spyOn(feedProvider, 'fetch').and.returnValue(Promise.resolve(feedItemMocks));
+    // spyOn(feedProvider, 'fetch').and.returnValue(Promise.resolve(feedItemMocks));
 
     component = fixture.componentInstance;
     fixture.detectChanges();

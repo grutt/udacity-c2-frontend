@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders,  HttpErrorResponse, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders,  HttpErrorResponse, HttpRequest, HttpEvent } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { FeedItem } from '../feed/models/feed-item.model';
@@ -7,65 +7,62 @@ import { catchError, tap, map } from 'rxjs/operators';
 
 const API_HOST = environment.apiHost;
 
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
-
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+  httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
+  };
 
-  constructor(private http: HttpClient) { }
+  token: string;
 
-  async postFeedItemMeta(caption: string, file: File) {
-    const url = `${API_HOST}/feed`;
-
-    const options = {
-      headers: new HttpHeaders().set('Content-Type', 'application/json')
-    };
-
-    const resp = await this.http.post(url, {url: file.name, caption: caption}, options).toPromise();
+  constructor(private http: HttpClient) {
   }
 
-  async uploadFeedItem(caption: string, file: File) {
-    const url = `${API_HOST}/feed/signed-url/${file.name}`;
-    const signed_url = (<any> await this.http.get(url, httpOptions).toPromise()).url;
-    console.log(signed_url);
+  setAuthToken(token) {
+    this.httpOptions.headers = this.httpOptions.headers.append('Authorization', `jwt ${token}`);
+    this.token = token;
+  }
+
+
+  get(endpoint): Promise<any> {
+    const url = `${API_HOST}${endpoint}`;
+    const req = this.http.get(url, this.httpOptions).pipe(map(this.extractData));
+
+    return req
+            .toPromise()
+            .catch((e) => { throw e; });
+  }
+
+  post(endpoint, data): Promise<any> {
+    const url = `${API_HOST}${endpoint}`;
+    return this.http.post<HttpEvent<any>>(url, data, this.httpOptions)
+            .toPromise()
+            .catch((e) => { throw e; });
+  }
+
+  async upload(endpoint: string, file: File, payload: any): Promise<any> {
+    const signed_url = (await this.get(`${endpoint}/signed-url/${file.name}`)).url;
 
     const headers = new HttpHeaders({'Content-Type': file.type});
-
     const req = new HttpRequest( 'PUT', signed_url, file,
                                   {
                                     headers: headers,
                                     reportProgress: true, // track progress
                                   });
 
-    return this.http.request(req).subscribe((resp) => {
-      if (resp && (<any> resp).status && (<any> resp).status === 200) {
-        this.postFeedItemMeta(caption, file);
-      }
+    return new Promise ( resolve => {
+        this.http.request(req).subscribe((resp) => {
+        if (resp && (<any> resp).status && (<any> resp).status === 200) {
+          resolve(this.post(endpoint, payload));
+        }
+      });
     });
   }
 
-  async postFeedItem() {
-    const url = `${API_HOST}/feed`;
-    const req = this.http.get(url, httpOptions).pipe(map(this.extractData));
-      // catchError(this.handleError));
-    const resp = <any> (await req.toPromise());
-    return resp.rows;
-  }
-
-  async getFeed() {
-    const url = `${API_HOST}/feed`;
-    const req = this.http.get(url, httpOptions).pipe(
-      map(this.extractData));
-      // catchError(this.handleError));
-    const resp = <any> (await req.toPromise());
-    return resp.rows;
-  }
-
-  private extractData(res: Response) {
+  /// Utilities
+  private extractData(res: HttpEvent<any>) {
     const body = res;
     return body || { };
   }

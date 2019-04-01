@@ -4,26 +4,26 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
-import { ApiModule } from '../api/api.module';
-
 import { FeedListComponent } from './feed-list/feed-list.component';
 import { FeedItemComponent } from './feed-item/feed-item.component';
 import { FeedUploadComponent } from './feed-upload/feed-upload.component';
+import { FeedUploadButtonComponent } from './feed-upload/feed-upload-button/feed-upload-button.component';
 
 import { FeedProviderService } from './services/feed.provider.service';
 
-const components = [FeedListComponent, FeedItemComponent, FeedUploadComponent];
+const entryComponents = [FeedUploadComponent];
+const components = [FeedListComponent, FeedItemComponent, FeedUploadComponent, FeedUploadButtonComponent];
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ApiModule,
     ReactiveFormsModule
   ],
   declarations: components,
   exports: components,
+  entryComponents: entryComponents,
   providers: [FeedProviderService]
 })
 export class FeedModule {}

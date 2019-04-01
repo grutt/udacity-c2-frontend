@@ -1,4 +1,4 @@
-<form [formGroup]="uploadForm" (submit)="onSubmit()">
+<form [formGroup]="uploadForm" (submit)="onSubmit($event)">`
     <label>
         <input type="file" (change)="selectImage($event)" accept="image/*" style="display:none"/>
         <img *ngIf="previewDataUrl" [src]="previewDataUrl" style="width:50px; height: 50px;" />

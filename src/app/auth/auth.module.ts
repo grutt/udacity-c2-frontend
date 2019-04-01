@@ -9,6 +9,9 @@ import { AuthLoginComponent } from './auth-login/auth-login.component';
 import { AuthRegisterComponent } from './auth-register/auth-register.component';
 import { AuthMenuUserComponent } from './auth-menu-button/auth-menu-user/auth-menu-user.component';
 
+import { ApiModule } from '../api/api.module';
+import { ApiService } from '../api/api.service';
+
 const entryComponents = [AuthMenuUserComponent, AuthMenuButtonComponent, AuthLoginComponent, AuthRegisterComponent];
 const components = [...entryComponents];
 
@@ -17,7 +20,8 @@ const components = [...entryComponents];
     CommonModule,
     FormsModule,
     IonicModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ApiModule
   ],
   entryComponents: entryComponents,
   declarations: components,

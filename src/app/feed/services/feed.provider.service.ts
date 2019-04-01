@@ -13,8 +13,24 @@ export class FeedProviderService {
   constructor(private api: ApiService) { }
 
   async getFeed(): Promise<BehaviorSubject<FeedItem[]>> {
-    const items = <FeedItem[]> await this.api.getFeed();
+    const req = await this.api.get('/feed');
+    const items = <FeedItem[]> req.rows;
     this.currentFeed$.next(items);
     return Promise.resolve(this.currentFeed$);
   }
+
+  async uploadFeedItem(caption: string, file: File) {
+    this.api.upload('/feed', file, {caption: caption, url: file.name});
+  }
+
 }
+
+// async getFeed() {
+//   const url = `${API_HOST}/feed`;
+
+//   const req = this.http.get(url, this.httpOptions).pipe(
+//     map(this.extractData));
+//     // catchError(this.handleError));
+//   const resp = <any> (await req.toPromise());
+//   return resp.rows;
+// }

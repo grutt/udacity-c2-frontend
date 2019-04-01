@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
 
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FeedProviderService } from '../services/feed.provider.service';
+
 
 @Component({
   selector: 'app-feed-upload',
@@ -14,7 +16,7 @@ export class FeedUploadComponent implements OnInit {
   uploadForm: FormGroup;
 
   constructor(
-    private api: ApiService,
+    private feed: FeedProviderService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -44,8 +46,12 @@ export class FeedUploadComponent implements OnInit {
 
   }
 
-  onSubmit() {
+  onSubmit($event) {
+    $event.preventDefault();
     if (!this.uploadForm.valid || !this.file) { return; }
-    this.api.uploadFeedItem(this.uploadForm.controls.caption.value, this.file);
+    this.feed.uploadFeedItem(this.uploadForm.controls.caption.value, this.file)
+      .then((result) => {
+        console.log(result);
+      });
   }
 }

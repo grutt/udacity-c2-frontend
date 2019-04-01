@@ -10,6 +10,6 @@ const components = [];
   ],
   declarations: components,
   exports: components,
-  providers: [ApiService]
+  providers: []
 })
 export class ApiModule {}
