@@ -15,11 +15,14 @@
 
 <!-- display the avatar if user is logged in -->
 <ion-item-group
-  (click)="logout()"
   *ngIf=" ( auth.currentUser$ | async ) ">
-  {{( auth.currentUser$ | async ).email }}
   <ion-button 
+  color="secondary">
+    {{( auth.currentUser$ | async ).email }}
+  </ion-button>
+  <ion-button 
+  (click)="logout()"
   color="primary">
-   Log Out
+    Log Out
   </ion-button>
 </ion-item-group>
