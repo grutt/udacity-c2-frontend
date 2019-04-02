@@ -1,11 +1,11 @@
-<form [formGroup]="registerForm">
-    <ion-item>
-      <ion-label position="floating" color="primary">Email</ion-label>
-      <ion-input type="text" formControlName="email" required></ion-input>
-    </ion-item>
+<form [formGroup]="registerForm" (submit)="onSubmit($event)">
     <ion-item>
       <ion-label position="floating" color="primary">Name</ion-label>
       <ion-input type="text" formControlName="name" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary">Email</ion-label>
+      <ion-input type="text" formControlName="email" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating" color="primary">Password</ion-label>
@@ -17,9 +17,9 @@
     </ion-item>
     <ion-button 
       color="primary" 
-      [disabled]="!registerForm.valid"
-      (click)="register()">
+      type="submit"
+      [disabled]="!registerForm.valid ">
       Register
-    </ion-button>
+    </ion-button> {{error}}
   </form>
   

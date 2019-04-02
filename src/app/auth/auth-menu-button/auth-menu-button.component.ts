@@ -18,27 +18,29 @@ export class AuthMenuButtonComponent implements OnInit {
     public modalController: ModalController
     ) {}
 
-  async presentPopover(ev: any) {
-    const popover = await this.modalController.create({
+  async presentmodal(ev: any) {
+    const modal = await this.modalController.create({
       component: AuthMenuUserComponent,
-      // componentProps:
     });
-    return await popover.present();
+    return await modal.present();
   }
 
   async presentLogin(ev: any) {
-    const popover = await this.modalController.create({
+    const modal = await this.modalController.create({
       component: AuthLoginComponent,
-      // componentProps:
     });
-    return await popover.present();
+    return await modal.present();
   }
+
   async presentRegister(ev: any) {
-    const popover = await this.modalController.create({
+    const modal = await this.modalController.create({
       component: AuthRegisterComponent,
-      // componentProps:
     });
-    return await popover.present();
+    return await modal.present();
+  }
+
+  logout() {
+    this.auth.logout();
   }
 
   ngOnInit() {}

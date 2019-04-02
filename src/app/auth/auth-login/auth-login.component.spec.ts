@@ -1,22 +1,24 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AuthLoginPage } from './auth-login.page';
+import { AuthLoginComponent } from './auth-login.component';
 
 describe('AuthLoginPage', () => {
-  let component: AuthLoginPage;
-  let fixture: ComponentFixture<AuthLoginPage>;
+  let component: AuthLoginComponent;
+  let fixture: ComponentFixture<AuthLoginComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthLoginPage ],
+      imports: [FormsModule, ReactiveFormsModule],
+      declarations: [ AuthLoginComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AuthLoginPage);
+    fixture = TestBed.createComponent(AuthLoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

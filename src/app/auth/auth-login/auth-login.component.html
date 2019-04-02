@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" (submit)="onSubmit()">
+<form [formGroup]="loginForm" (submit)="onSubmit($event)">
   <ion-item>
     <ion-label position="floating" color="primary">Email</ion-label>
     <ion-input type="text" formControlName="email" required></ion-input>
@@ -13,4 +13,5 @@
     [disabled]="!loginForm.valid">
     Log In
   </ion-button>
+  {{error}}
 </form>
